@@ -1,5 +1,6 @@
 /sys/boot/arch/x86_64/limine
 /var
+/sdk/inc/sys
 *.o
 *.d
 *.bin

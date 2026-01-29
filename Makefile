@@ -6,8 +6,13 @@
 include mk/default.mk
 
 .PHONY: all
-all: sys
+all: headers sys
 	cd sys/boot/arch/$(ARCH_TARGET); ./iso
+
+.PHONY: headers
+headers:
+	mkdir -p sdk/inc/sys
+	rsync -avr sys/inc/sys/* sdk/inc/sys
 
 .PHONY: sys
 sys:
