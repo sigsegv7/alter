@@ -16,6 +16,7 @@ typedef unsigned short      __uint16_t;
 typedef unsigned long       __uint32_t;
 typedef unsigned long long  __uint64_t;
 typedef __uint64_t          __size_t;
+typedef __uint64_t          __uintptr_t;
 
 /* Signed types */
 typedef int         __int8_t;
@@ -45,6 +46,10 @@ typedef __uint32_t  uint32_t;
 #ifndef uint64_t
 typedef __uint64_t  uint64_t;
 #endif  /* !uint64_t */
+
+#ifndef uintptr_t
+typedef __uint64_t  uintptr_t;
+#endif  /* !uintptr_t */
 
 #ifndef int8_t
 typedef __int8_t    int8_t;
