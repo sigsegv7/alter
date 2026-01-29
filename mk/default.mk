@@ -3,6 +3,7 @@
 # Provided under the BSD-3 clause.
 #
 
+BOOT_PROTO  = limine
 ARCH_TARGET = x86_64
 
 CC = \
@@ -36,4 +37,5 @@ PASSDOWN_ARGS = 				\
 	ARCH_TARGET=$(ARCH_TARGET)  \
 	CC=$(CC)					\
 	LD=$(LD)					\
-	SYS_CFLAGS="$(SYS_CFLAGS)"
+	SYS_CFLAGS="$(SYS_CFLAGS)"  \
+	BOOT_PROTO=$(BOOT_PROTO)
