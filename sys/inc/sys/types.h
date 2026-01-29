@@ -51,6 +51,10 @@ typedef __uint64_t  uint64_t;
 typedef __uint64_t  uintptr_t;
 #endif  /* !uintptr_t */
 
+#ifndef size_t
+typedef __size_t  size_t;
+#endif  /* !size_t */
+
 #ifndef int8_t
 typedef __int8_t    int8_t;
 #endif  /* !int8_t */
