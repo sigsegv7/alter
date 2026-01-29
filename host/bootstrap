@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -e
+
+mkdir -p var/
+mkdir -p var/root/usr/include/
+mkdir -p var/root/usr/bin/
+
+if [[ ! -d var/cc/toolchain ]]
+then
+    git clone https://github.com/LUNOTA-SOFTWARE-FOUNDATION/lunota-toolchain --depth=1 var/cc/toolchain
+fi
