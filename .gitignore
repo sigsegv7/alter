@@ -3,6 +3,7 @@
 /sdk/inc/sys
 *.o
 *.d
+*.a
 *.bin
 *.iso
 *.img

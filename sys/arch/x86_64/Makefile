@@ -7,6 +7,10 @@ MISC_OFILES = $(shell find ../../ -name "*.o")
 ASMFILES = $(shell find . -name "*.S")
 ASMOFILES = $(ASMFILES:.S=.S.o)
 
+LDFLAGS =					\
+	-L../../../sdk/			\
+	-lstr
+
 .PHONY: all
 all: $(ASMOFILES)
 	$(LD) $(MISC_OFILES) -Tconf/link.lds -o ../../alter.sys $(LDFLAGS)

@@ -6,13 +6,17 @@
 include mk/default.mk
 
 .PHONY: all
-all: headers sys
+all: headers sdk sys
 	cd sys/boot/arch/$(ARCH_TARGET); ./iso
+
+.PHONY: sdk
+sdk:
+	cd sdk/; make
 
 .PHONY: headers
 headers:
 	mkdir -p sdk/inc/sys
-	rsync -avr sys/inc/sys/* sdk/inc/sys
+	rsync -avr sys/inc/sys/*.h sdk/inc/sys
 
 .PHONY: sys
 sys:

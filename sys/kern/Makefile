@@ -10,6 +10,7 @@ OFILES = $(CFILES:.c=.o)
 
 CFLAGS = 					\
 	$(SYS_CFLAGS) 			\
+	-I../../sdk/libstr/inc/ \
 	-I../inc/ 				\
 	-D_KERNEL				\
 	-MMD					\
