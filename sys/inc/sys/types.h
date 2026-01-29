@@ -6,6 +6,10 @@
 #ifndef _SYS_TYPES_H_
 #define _SYS_TYPES_H_ 1
 
+#if defined(_KERNEL) || defined(_ALTER_SOURCE)
+#include <sys/_null.h>
+#endif  /* !_KERNEL || _ALTER_SOURCE */
+
 /* Unsigned types */
 typedef unsigned char       __uint8_t;
 typedef unsigned short      __uint16_t;
