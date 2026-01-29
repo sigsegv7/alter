@@ -7,7 +7,7 @@ include mk/default.mk
 
 .PHONY: all
 all: sys
-		cd sys/boot/arch/$(ARCH_TARGET); ./iso
+	cd sys/boot/arch/$(ARCH_TARGET); ./iso
 
 .PHONY: sys
 sys:
