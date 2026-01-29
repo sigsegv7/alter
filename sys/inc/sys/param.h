@@ -1,0 +1,25 @@
+/*
+ * Copyright (c) 2026, Ian Moffett.
+ * Provided under the BSD-3 clause.
+ */
+
+#ifndef _SYS_PARAM_H_
+#define _SYS_PARAM_H_ 1
+
+/* Bit related macros */
+#define BIT(n) (1 << (n))
+#define ISSET(v, f)  ((v) & (f))
+
+/* Align up/down a value */
+#define ALIGN_DOWN(value, align)      ((value) & ~((align)-1))
+#define ALIGN_UP(value, align)        (((value) + (align)-1) & ~((align)-1))
+
+/* Bitmap helper macros */
+#define SETBIT(a, b) ((a)[(b) >> 3] |= BIT(b % 8))
+#define CLRBIT(a, b) ((a)[(b) >> 3] &= ~BIT(b % 8))
+#define TESTBIT(a, b) (ISSET((a)[(b) >> 3], BIT(b % 8)))
+
+/* Get number of array elements */
+#define NELEM(a) (sizeof(a) / sizeof(a[0]))
+
+#endif  /* !_SYS_PARAM_H_ */
