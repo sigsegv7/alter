@@ -5,5 +5,5 @@ set -e
 if [[ ! -d limine ]]
 then
     git clone https://github.com/limine-bootloader/limine.git --branch=v9.3.0-binary --depth=1 limine
-    make -C limine
+    make -C limine CC=cc
 fi
