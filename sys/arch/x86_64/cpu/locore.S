@@ -10,6 +10,12 @@ _start:
     cli
     cld
 
+    /* Disable the legacy i8259s */
+    mov $0xFF, %al
+    out %al, $0x21
+    out %al, $0xA1
+
+    /* Call the kernel */
     xor %rbp, %rbp
     call kmain
 
