@@ -4,12 +4,16 @@
 #
 
 .PHONY: all
-all: boot
+all: arch boot
+
+.PHONY: arch
+arch:
+	cd arch/; make $(PASSDOWN_ARGS)
 
 .PHONY: boot
 boot:
 	cd boot/$(ARCH_TARGET); make $(PASSDOWN_ARGS)
 
 .PHONY: clean
-clean:
-	cd boot/$(ARCH_TARGET); make $(PASSDOWN_ARGS) clean
+distclean:
+	cd boot/$(ARCH_TARGET); make $(PASSDOWN_ARGS) distclean

@@ -1,5 +1,7 @@
+/sys/boot/arch/x86_64/limine
 *.o
 *.d
 *.bin
 *.iso
 *.img
+*.sys

@@ -11,5 +11,5 @@ boot:
 	cd arch/$(ARCH_TARGET); make $(PASSDOWN_ARGS)
 
 .PHONY: clean
-clean:
-	cd arch/$(ARCH_TARGET); make clean
+distclean:
+	cd arch/$(ARCH_TARGET); make distclean

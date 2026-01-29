@@ -4,12 +4,5 @@
 #
 
 .PHONY: all
-all: deps
-
-.PHONY: deps
-deps:
-	./deps
-
-.PHONY: clean
-distclean:
-	rm -rf limine
+all:
+	cd $(ARCH_TARGET); make

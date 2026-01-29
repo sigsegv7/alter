@@ -7,11 +7,12 @@ include mk/default.mk
 
 .PHONY: all
 all: sys
+		cd sys/boot/arch/$(ARCH_TARGET); ./iso
 
 .PHONY: sys
 sys:
 	cd sys/; make PASSDOWN_ARGS=$(PASSDOWN_ARGS)
 
 .PHONY: clean
-clean:
-	cd sys/; make clean PASSDOWN_ARGS=$(PASSDOWN_ARGS)
+distclean:
+	cd sys/; make distclean PASSDOWN_ARGS=$(PASSDOWN_ARGS)
