@@ -11,7 +11,7 @@ all: sys
 
 .PHONY: sys
 sys:
-	cd sys/; make PASSDOWN_ARGS=$(PASSDOWN_ARGS)
+	cd sys/; make $(PASSDOWN_ARGS)
 
 .PHONY: clean
 distclean:

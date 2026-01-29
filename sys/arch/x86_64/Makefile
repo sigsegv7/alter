@@ -3,7 +3,7 @@
 # Provided under the BSD-3 clause.
 #
 
-MISC_OFILES = $(shell find ../ -name "*.o")
+MISC_OFILES = $(shell find ../../ -name "*.o")
 ASMFILES = $(shell find . -name "*.S")
 ASMOFILES = $(ASMFILES:.S=.S.o)
 

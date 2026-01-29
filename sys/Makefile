@@ -4,7 +4,11 @@
 #
 
 .PHONY: all
-all: arch boot
+all: kern arch boot
+
+.PHONY: kern
+kern:
+	cd kern/; make
 
 .PHONY: arch
 arch:
@@ -12,7 +16,7 @@ arch:
 
 .PHONY: boot
 boot:
-	cd boot/$(ARCH_TARGET); make $(PASSDOWN_ARGS)
+	cd boot/arch/$(ARCH_TARGET); make $(PASSDOWN_ARGS)
 
 .PHONY: clean
 distclean:
