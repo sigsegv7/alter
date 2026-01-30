@@ -7,6 +7,7 @@
 #define _OS_BTL_H_ 1
 
 #include <sys/status.h>
+#include <sys/cdefs.h>
 #include <sys/types.h>
 
 /*
@@ -85,5 +86,19 @@ status_t btl_get_proto(struct btl_proto *res);
 
 /* Protocol backends */
 status_t btl_limine_init(struct btl_proto *res);
+
+/*
+ * Obtain the virtual kernel load base address
+ */
+__always_inline static inline uintptr_t
+btl_kernel_base(void)
+{
+    struct btl_proto proto;
+
+    if (btl_get_proto(&proto) != STATUS_SUCCESS)
+        return 0;
+
+    return proto.kernel_base;
+}
 
 #endif  /* !_OS_BTL_H_ */
