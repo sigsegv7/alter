@@ -20,7 +20,8 @@ SYS_CFLAGS =			\
 	-fexceptions		\
 	--std=gnu11			\
 	-mcmodel=kernel		\
-	-Wno-attributes
+	-Wno-attributes		\
+	-fno-stack-protector
 
 ifeq ($(ARCH),x86_64)
 	SYS_CFLAGS += 		\
