@@ -11,7 +11,7 @@ all: headers sdk sys
 
 .PHONY: sdk
 sdk:
-	cd sdk/; make
+	cd sdk/; make $(PASSDOWN_ARGS)
 
 .PHONY: headers
 headers:
