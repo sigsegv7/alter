@@ -22,4 +22,9 @@ void mu_irq_set_mask(bool mask);
  */
 bool mu_irq_get_mask(void);
 
+/*
+ * Spinwait hint for the processor
+ */
+void mu_cpu_spinwait(void);
+
 #endif  /* !_MU_CPU_H_ */

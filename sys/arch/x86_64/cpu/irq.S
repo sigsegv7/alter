@@ -25,3 +25,8 @@ mu_irq_get_mask:
     shr $9, %rax
     and $1, %rax
     retq
+
+    .globl mu_cpu_spinwait
+mu_cpu_spinwait:
+    pause
+    retq
