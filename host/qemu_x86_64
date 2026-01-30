@@ -4,4 +4,4 @@ qemu-system-x86_64      \
     -cdrom alter.iso    \
     -m 2G               \
     --enable-kvm        \
-    -monitor stdio
+    -serial stdio
