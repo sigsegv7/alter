@@ -8,6 +8,19 @@
 
 #if defined(_KERNEL) || defined(_ALTER_SOURCE)
 #include <sys/_null.h>
+
+#ifndef bool
+typedef _Bool bool;
+#endif  /* !bool */
+
+#ifndef true
+#define true 1
+#endif  /* !true */
+
+#ifndef false
+#define false 0
+#endif  /* !false */
+
 #endif  /* !_KERNEL || _ALTER_SOURCE */
 
 /* Unsigned types */
