@@ -34,6 +34,7 @@ static uintptr_t mem_usable_top = 0;
 
 /* Bitmap */
 static uint8_t *bitmap = NULL;
+static size_t last_bit = 0;
 static size_t bitmap_size = 0;
 
 /*
@@ -90,12 +91,11 @@ bitmap_populate(void)
         end = entry.base + entry.length;
 
         /* Is it allocated? */
-        if (entry.type != BTL_MEM_USABLE) {
-            bitmap_set_range(start, end, true);
+        if (entry.type == BTL_MEM_USABLE) {
+            bitmap_set_range(start, end, false);
             continue;
         }
 
-        bitmap_set_range(start, end, false);
     }
 }
 
@@ -126,6 +126,7 @@ bitmap_allocate(void)
         bitmap = pma_to_vma(entry.base);
         memset(bitmap, 0xFFFFFFFF, bitmap_size);
         bitmap_populate();
+        break;
     }
 }
 
@@ -178,10 +179,72 @@ frame_probe(void)
     bitmap_size /= 8;
 }
 
+/*
+ * Allocate one or more physical memory frames
+ */
+static uintptr_t
+frame_alloc(size_t count)
+{
+    ssize_t start_idx = -1;
+    size_t frames_found = 0;
+    uintptr_t start, end;
+    size_t max_bit;
+
+    max_bit = mem_usable_top / PAGESIZE;
+    for (size_t i = last_bit; i < max_bit; ++i) {
+        if (!TESTBIT(bitmap, i)) {
+            if (start_idx < 0)
+                start_idx = i;
+            if ((++frames_found) >= count)
+                break;
+
+            continue;
+        }
+
+        start_idx = -1;
+    }
+
+    if (start_idx < 0) {
+        return 0;
+    }
+
+    start = start_idx * PAGESIZE;
+    end = start + (count * PAGESIZE);
+    bitmap_set_range(start, end, true);
+    return start;
+}
+
+uintptr_t
+mm_frame_alloc(size_t count)
+{
+    uintptr_t phys;
+
+    phys = frame_alloc(count);
+    if (phys == 0) {
+        last_bit = 0;
+        phys = frame_alloc(count);
+    }
+
+    return phys;
+}
+
+void
+mm_frame_free(uintptr_t base, size_t count)
+{
+    uintptr_t range_end;
+
+    base = ALIGN_DOWN(base, PAGESIZE);
+    range_end = base + (count * PAGESIZE);
+    bitmap_set_range(base, range_end, false);
+}
+
 void
 mm_frame_init(void)
 {
     /* First probe physical memory */
     trace(LOG_INFO, "probing physical memory");
     frame_probe();
+
+    /* Allocate a bitmap */
+    bitmap_allocate();
 }
