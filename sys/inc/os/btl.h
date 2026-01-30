@@ -9,6 +9,20 @@
 #include <sys/types.h>
 
 /*
+ * Valid memory types
+ */
+typedef enum {
+    BTL_MEM_USABLE,
+    BTL_MEM_RESERVED,
+    BTL_MEM_ACPI_RECLAIM,
+    BTL_MEM_ACPI_NVS,
+    BTL_MEM_BAD,
+    BTL_MEM_BOOTLOADER,
+    BTL_MEM_KERNEL,
+    BTL_MEM_FRAMEBUFFER
+} btl_memtype_t;
+
+/*
  * Represents a boot translation layer screen
  * descriptor
  *
@@ -22,6 +36,19 @@ struct btl_screen {
     uint64_t height;
     uint64_t pitch;
     uint32_t *address;
+};
+
+/*
+ * Represents a valid memory map entry
+ *
+ * @base:   Memory entry base
+ * @length: Length of memory entry
+ * @type:   Memory entry type
+ */
+struct btl_memmap_entry {
+    uint64_t base;
+    uint64_t length;
+    btl_memtype_t type;
 };
 
 /*
@@ -41,6 +68,16 @@ struct btl_proto {
  * Returns zero on success
  */
 int btl_init(void);
+
+/*
+ * Obtain a memory map entry by index
+ *
+ * @index: Index of memory map entry to obtain
+ * @res:   Result of memory map descriptor
+ *
+ * Returns zero on success
+ */
+int btl_get_mementry(size_t index, struct btl_memmap_entry *res);
 
 /*
  * Obtain the protocol descriptor in-use
