@@ -15,7 +15,7 @@
 
 static struct btl_proto proto;
 
-int
+status_t
 btl_get_proto(struct btl_proto *res)
 {
     if (res == NULL) {
@@ -26,7 +26,7 @@ btl_get_proto(struct btl_proto *res)
     return STATUS_SUCCESS;
 }
 
-int
+status_t
 btl_init(void)
 {
     switch (*BOOT_PROTO) {

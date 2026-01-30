@@ -14,4 +14,6 @@
 #define STATUS_BUSY         5   /* Resource is busy */
 #define STATUS_INVALID_ARG  6   /* Invalid argument */
 
+typedef int status_t;
+
 #endif  /* !_SYS_STATUS_H_ */

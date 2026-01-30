@@ -6,6 +6,7 @@
 #ifndef _OS_BTL_H_
 #define _OS_BTL_H_ 1
 
+#include <sys/status.h>
 #include <sys/types.h>
 
 /*
@@ -64,31 +65,25 @@ struct btl_proto {
 
 /*
  * Initialize the boot protocol translation layer
- *
- * Returns zero on success
  */
-int btl_init(void);
+status_t btl_init(void);
 
 /*
  * Obtain a memory map entry by index
  *
  * @index: Index of memory map entry to obtain
  * @res:   Result of memory map descriptor
- *
- * Returns zero on success
  */
-int btl_get_mementry(size_t index, struct btl_memmap_entry *res);
+status_t btl_get_mementry(size_t index, struct btl_memmap_entry *res);
 
 /*
  * Obtain the protocol descriptor in-use
  *
  * @res: Result is written here
- *
- * Returns zero on success
  */
-int btl_get_proto(struct btl_proto *res);
+status_t btl_get_proto(struct btl_proto *res);
 
 /* Protocol backends */
-int btl_limine_init(struct btl_proto *res);
+status_t btl_limine_init(struct btl_proto *res);
 
 #endif  /* !_OS_BTL_H_ */

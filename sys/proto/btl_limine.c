@@ -31,7 +31,7 @@ static volatile struct limine_hhdm_request hhdm_req = {
     .revision = 0
 };
 
-static int
+static status_t
 limine_getscr_info(struct btl_proto *res)
 {
     struct btl_screen *screen;
@@ -48,7 +48,7 @@ limine_getscr_info(struct btl_proto *res)
     return STATUS_SUCCESS;
 }
 
-int
+status_t
 btl_get_mementry(size_t index, struct btl_memmap_entry *res)
 {
     struct limine_memmap_entry *entry;
@@ -68,7 +68,7 @@ btl_get_mementry(size_t index, struct btl_memmap_entry *res)
     return STATUS_SUCCESS;
 }
 
-int
+status_t
 btl_limine_init(struct btl_proto *res)
 {
     if (res == NULL) {
