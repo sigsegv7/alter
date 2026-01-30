@@ -17,3 +17,11 @@ mu_irq_set_mask:
     jmp .exit
 .exit:
     retq
+
+    .globl mu_irq_get_mask
+mu_irq_get_mask:
+    pushfq
+    pop %rax
+    shr $9, %rax
+    and $1, %rax
+    retq

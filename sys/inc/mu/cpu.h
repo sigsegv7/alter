@@ -15,4 +15,11 @@
  */
 void mu_irq_set_mask(bool mask);
 
+/*
+ * Get the IRQ mask state
+ *
+ * Returns true if IRQs are masked
+ */
+bool mu_irq_get_mask(void);
+
 #endif  /* !_MU_CPU_H_ */
