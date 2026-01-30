@@ -12,5 +12,6 @@
 #define STATUS_NO_MEM       3   /* Out of memory */
 #define STATUS_DENIED       4   /* Access denied */
 #define STATUS_BUSY         5   /* Resource is busy */
+#define STATUS_INVALID_ARG  6   /* Invalid argument */
 
 #endif  /* !_SYS_STATUS_H_ */
