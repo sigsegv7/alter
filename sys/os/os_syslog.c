@@ -8,31 +8,77 @@
 #include <mu/uart.h>
 #include <string.h>
 
-static void
+/*
+ * Write a raw string to the console
+ *
+ * TODO: This perhaps needs locking
+ */
+static size_t
 write_str(const char *s)
 {
     size_t len;
 
     if (s == NULL) {
-        return;
+        return 0;
     }
 
     len = strlen(s);
     mu_uart_writed(s, len);
+    return len;
 }
 
-void
-printf(const char *fmt, ...)
+ssize_t
+vprintf(const char *fmt, va_list ap)
 {
     char buf[SYSLOG_BUFSZ];
-    va_list ap;
 
     if (fmt == NULL) {
-        return;
+        return -1;
+    }
+
+    vsnprintf(buf, sizeof(buf), fmt, ap);
+    write_str(buf);
+}
+
+ssize_t
+printf(const char *fmt, ...)
+{
+    va_list ap;
+    size_t count;
+
+    if (fmt == NULL) {
+        return -1;
     }
 
     va_start(ap, fmt);
-    vsnprintf(buf, sizeof(buf), fmt, ap);
+    count = vprintf(fmt, ap);
     va_end(ap);
-    write_str(buf);
+    return count;
+}
+
+void
+trace(log_level_t level, const char *fmt, ...)
+{
+    size_t count, pad_count;
+    va_list ap;
+    char c;
+
+    va_start(ap, fmt);
+    count = vprintf(fmt, ap);
+    va_end(ap);
+
+    switch (level) {
+    case LOG_ERROR:
+        c = '*';
+        break;
+    default:
+        c = '.';
+        break;
+    }
+
+    pad_count = SYSLOG_BUFSZ - count - 1;
+    for (size_t i = 0; i < pad_count; ++i) {
+        printf("%c", c);
+    }
+    printf("\n");
 }
