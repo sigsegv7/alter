@@ -42,4 +42,16 @@ struct btl_proto {
  */
 int btl_init(void);
 
+/*
+ * Obtain the protocol descriptor in-use
+ *
+ * @res: Result is written here
+ *
+ * Returns zero on success
+ */
+int btl_get_proto(struct btl_proto *res);
+
+/* Protocol backends */
+int btl_limine_init(struct btl_proto *res);
+
 #endif  /* !_OS_BTL_H_ */
