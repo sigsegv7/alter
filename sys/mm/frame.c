@@ -4,10 +4,13 @@
  */
 
 #include <sys/units.h>
+#include <sys/param.h>
 #include <sys/types.h>
 #include <os/syslog.h>
 #include <os/btl.h>
 #include <mm/frame.h>
+#include <mm/vmm.h>
+#include <string.h>
 
 /*
  * Memory type table used to convert type constants to
@@ -29,6 +32,10 @@ static size_t mem_total = 0;
 static size_t mem_usable = 0;
 static uintptr_t mem_usable_top = 0;
 
+/* Bitmap */
+static uint8_t *bitmap = NULL;
+static size_t bitmap_size = 0;
+
 /*
  * Helper to print sizes in human readable units
  */
@@ -41,6 +48,84 @@ print_size(const char *title, size_t count)
         trace(LOG_INFO, "%s: %d MiB", title, count / UNIT_MIB);
     } else {
         trace(LOG_INFO, "%s: %d bytes", title, count);
+    }
+}
+
+/*
+ * Set a range within the bitmap
+ *
+ * @start: Start address of range
+ * @end:   End address of range
+ * @alloc: If true, set range as allocated
+ */
+static void
+bitmap_set_range(uintptr_t start, uintptr_t end, bool alloc)
+{
+    /* Clamp to page boundary */
+    start = ALIGN_DOWN(start, PAGESIZE);
+    end = ALIGN_UP(start, PAGESIZE);
+
+    for (uintptr_t addr = start; addr < end; addr += PAGESIZE) {
+        if (alloc) {
+            SETBIT(bitmap, addr / PAGESIZE);
+        } else {
+            CLRBIT(bitmap, addr / PAGESIZE);
+        }
+    }
+}
+
+static void
+bitmap_populate(void)
+{
+    struct btl_memmap_entry entry;
+    uintptr_t start, end;
+
+    for (size_t i = 0;; ++i) {
+        if (btl_get_mementry(i, &entry) != 0) {
+            break;
+        }
+
+        /* Get the range */
+        start = entry.base;
+        end = entry.base + entry.length;
+
+        /* Is it allocated? */
+        if (entry.type != BTL_MEM_USABLE) {
+            bitmap_set_range(start, end, true);
+            continue;
+        }
+
+        bitmap_set_range(start, end, false);
+    }
+}
+
+/*
+ * Allocate a bitmap
+ */
+static void
+bitmap_allocate(void)
+{
+    struct btl_memmap_entry entry;
+
+    for (size_t i = 0;; ++i) {
+        if (btl_get_mementry(i, &entry) != 0) {
+            break;
+        }
+
+        /* Drop unusable entries */
+        if (entry.type != BTL_MEM_USABLE) {
+            continue;
+        }
+
+        /* Drop entries that are too small */
+        if (entry.length < bitmap_size) {
+            continue;
+        }
+
+        /* Set the bitmap and populate */
+        bitmap = pma_to_vma(entry.base);
+        memset(bitmap, 0xFFFFFFFF, bitmap_size);
+        bitmap_populate();
     }
 }
 
@@ -87,6 +172,10 @@ frame_probe(void)
     print_size("installed memory", mem_total);
     print_size("usable memory", mem_usable);
     printf("usable top @ %p\n", mem_usable_top);
+
+    /* Compute the bitmap size */
+    bitmap_size = mem_usable_top / PAGESIZE;
+    bitmap_size /= 8;
 }
 
 void
