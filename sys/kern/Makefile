@@ -5,6 +5,7 @@
 
 CFILES = $(shell find . -name "*.c")
 CFILES += $(shell find ../os -name "*.c")
+CFILES += $(shell find ../mm -name "*.c")
 CFILES += $(shell find ../proto -name "*.c")
 DFILES = $(CFILES:.c=.d)
 OFILES = $(CFILES:.c=.o)

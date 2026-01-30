@@ -6,6 +6,7 @@
 #include <os/syslog.h>
 #include <os/btl.h>
 #include <mu/uart.h>
+#include <mm/frame.h>
 
 #define ALTER_VERSION "0.0.1"
 
@@ -21,5 +22,7 @@ kmain(void)
     /* Write version to console */
     printf("booting alter [v%s]\n", ALTER_VERSION);
 
+    /* Initialize the frame manager */
+    frame_init();
     for (;;);
 }
