@@ -6,6 +6,10 @@
 #ifndef _SYS_PARAM_H_
 #define _SYS_PARAM_H_ 1
 
+/* Pointer offset macros */
+#define PTR_OFFSET(p, off) ((void *)(char *)(p) + (off))
+#define PTR_NOFFSET(p, off) ((void *)(char *)(p) - (off))
+
 /* Bit related macros */
 #define BIT(n) (1 << (n))
 #define ISSET(v, f)  ((v) & (f))
