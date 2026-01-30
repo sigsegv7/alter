@@ -63,7 +63,7 @@ bitmap_set_range(uintptr_t start, uintptr_t end, bool alloc)
 {
     /* Clamp to page boundary */
     start = ALIGN_DOWN(start, PAGESIZE);
-    end = ALIGN_UP(start, PAGESIZE);
+    end = ALIGN_UP(end, PAGESIZE);
 
     for (uintptr_t addr = start; addr < end; addr += PAGESIZE) {
         if (alloc) {
