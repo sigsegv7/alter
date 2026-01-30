@@ -23,6 +23,6 @@ kmain(void)
     printf("booting alter [v%s]\n", ALTER_VERSION);
 
     /* Initialize the frame manager */
-    frame_init();
+    mm_frame_init();
     for (;;);
 }

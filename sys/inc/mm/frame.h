@@ -11,6 +11,6 @@
 /*
  * Initialize the frame manager
  */
-void frame_init(void);
+void mm_frame_init(void);
 
 #endif  /* !_MM_FRAME_H_ */

@@ -90,7 +90,7 @@ frame_probe(void)
 }
 
 void
-frame_init(void)
+mm_frame_init(void)
 {
     /* First probe physical memory */
     trace(LOG_INFO, "probing physical memory");
