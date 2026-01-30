@@ -1,4 +1,5 @@
 /sys/boot/arch/x86_64/limine
+/sys/target
 /var
 /sdk/inc/sys
 *.o

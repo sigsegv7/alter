@@ -4,7 +4,12 @@
 #
 
 .PHONY: all
-all: kern arch boot
+all: target kern arch boot
+
+.PHONY: target
+target:
+	mkdir -p target/inc/machine
+	rsync -avr inc/arch/$(ARCH_TARGET)/* target/inc/machine
 
 .PHONY: kern
 kern:
