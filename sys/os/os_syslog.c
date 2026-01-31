@@ -5,6 +5,7 @@
 
 #include <sys/types.h>
 #include <os/syslog.h>
+#include <io/cons.h>
 #include <mu/uart.h>
 #include <string.h>
 
@@ -24,6 +25,7 @@ write_str(const char *s)
 
     len = strlen(s);
     mu_uart_writed(s, len);
+    cons_puts(&g_root_cons, s, len);
     return len;
 }
 
