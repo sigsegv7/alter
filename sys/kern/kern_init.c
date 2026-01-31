@@ -39,5 +39,6 @@ kmain(void)
         panic("failed to initialize root console\n");
     }
 
+    trace(LOG_INFO, "console online");
     for (;;);
 }
