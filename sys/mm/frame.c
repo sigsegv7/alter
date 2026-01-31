@@ -96,6 +96,7 @@ bitmap_populate(void)
             continue;
         }
 
+        bitmap_set_range(start, end, true);
     }
 }
 
@@ -124,7 +125,6 @@ bitmap_allocate(void)
 
         /* Set the bitmap and populate */
         bitmap = pma_to_vma(entry.base);
-        memset(bitmap, 0xFFFFFFFF, bitmap_size);
         bitmap_populate();
         break;
     }
