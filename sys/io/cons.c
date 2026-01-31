@@ -13,8 +13,6 @@
 #include <mm/pool.h>
 #include <string.h>
 
-#include <os/syslog.h>
-
 #define DEFAULT_FG 0x808080
 #define DEFAULT_BG 0x000000
 
