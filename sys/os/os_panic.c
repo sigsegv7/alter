@@ -30,7 +30,7 @@ panic(const char *fmt, ...)
 
     va_start(panic_ap, fmt);
     vsnprintf(panic_buf, sizeof(panic_buf), fmt, panic_ap);
-    printf("panic: %s", fmt);
+    printf("panic: %s", panic_buf);
 
     for (;;) {
         mu_cpu_hlt();
