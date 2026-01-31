@@ -6,6 +6,7 @@
 #include <sys/units.h>
 #include <sys/param.h>
 #include <sys/types.h>
+#include <os/spinlock.h>
 #include <os/syslog.h>
 #include <os/btl.h>
 #include <mm/frame.h>
@@ -36,6 +37,7 @@ static uintptr_t mem_usable_top = 0;
 static uint8_t *bitmap = NULL;
 static size_t last_bit = 0;
 static size_t bitmap_size = 0;
+static struct spinlock lock;
 
 /*
  * Helper to print sizes in human readable units
@@ -212,12 +214,14 @@ mm_frame_alloc(size_t count)
 {
     uintptr_t phys;
 
+    spinlock_acquire(&lock, true);
     phys = frame_alloc(count);
     if (phys == 0) {
         last_bit = 0;
         phys = frame_alloc(count);
     }
 
+    spinlock_release(&lock);
     return phys;
 }
 
@@ -226,8 +230,10 @@ mm_frame_free(uintptr_t base, size_t count)
 {
     uintptr_t range_end;
 
+    spinlock_acquire(&lock, true);
     range_end = base + (count * PAGESIZE);
     bitmap_set_range(base, range_end, false);
+    spinlock_release(&lock);
 }
 
 void
