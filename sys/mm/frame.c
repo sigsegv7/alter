@@ -93,10 +93,7 @@ bitmap_populate(void)
         /* Is it allocated? */
         if (entry.type == BTL_MEM_USABLE) {
             bitmap_set_range(start, end, false);
-            continue;
         }
-
-        bitmap_set_range(start, end, true);
     }
 }
 
@@ -125,7 +122,7 @@ bitmap_allocate(void)
 
         /* Set the bitmap and populate */
         bitmap = pma_to_vma(entry.base);
-        bitmap_populate();
+        memset(bitmap, 0xFF, bitmap_size);
         break;
     }
 }
@@ -146,10 +143,6 @@ frame_probe(void)
 
         /* Compute the highest address */
         mem_total += entry.length;
-        if ((entry.base + entry.length) >= mem_usable_top) {
-            mem_usable_top = entry.base + entry.length;
-        }
-
         trace(
             LOG_INFO,
             "%p - %p : %s",
@@ -158,14 +151,14 @@ frame_probe(void)
             typetab[entry.type]
         );
 
-        /* Get total usable memory */
-        if (entry.type == BTL_MEM_USABLE) {
-            mem_usable += entry.length;
-        }
-
         /* Skip unusable entries */
         if (entry.type != BTL_MEM_USABLE) {
             continue;
+        }
+
+        mem_usable += entry.length;
+        if ((entry.base + entry.length) >= mem_usable_top) {
+            mem_usable_top = entry.base + entry.length;
         }
     }
 
@@ -233,7 +226,6 @@ mm_frame_free(uintptr_t base, size_t count)
 {
     uintptr_t range_end;
 
-    base = ALIGN_DOWN(base, PAGESIZE);
     range_end = base + (count * PAGESIZE);
     bitmap_set_range(base, range_end, false);
 }
