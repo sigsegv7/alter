@@ -12,5 +12,6 @@
 #define __packed            __attr(packed)
 #define __no_return         __attr(noreturn)
 #define __always_inline     __attr(always_inline)
+#define __barrier()         __asmv("" ::: "memory")
 
 #endif  /* !_SYS_CDEFS_H_ */
