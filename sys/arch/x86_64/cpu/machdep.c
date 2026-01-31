@@ -18,6 +18,7 @@ mu_cpu_conf(struct cpu_info *ci)
 
     md_wrmsr(IA32_GS_BASE, (uintptr_t)ci);
     mm_pool_init(ci);
+    md_set_vectors();
     md_idt_load();
 }
 
