@@ -28,3 +28,7 @@ _start:
 1:  cli
     hlt
     jmp 1b
+
+    .globl mu_cpu_hlt
+mu_cpu_hlt:
+    hlt

@@ -52,4 +52,10 @@ bool mu_irq_get_mask(void);
  */
 void mu_cpu_spinwait(void);
 
+/*
+ * Halt the current processor until the next
+ * interrupt
+ */
+void mu_cpu_hlt(void);
+
 #endif  /* !_MU_CPU_H_ */
