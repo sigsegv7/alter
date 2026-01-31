@@ -26,7 +26,7 @@ all: $(ASMOFILES) $(OFILES)
 	$(LD) $(MISC_OFILES) -Tconf/link.lds -o ../../alter.sys $(LDFLAGS)
 
 %.S.o: %.S
-	$(CC) -c $< $(SYS_CFLAGS) -o $@
+	$(CC) -c $< $(CFLAGS) -o $@
 
 -include $(DFILES)
 %.o: %.c
