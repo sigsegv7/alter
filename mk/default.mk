@@ -21,7 +21,8 @@ SYS_CFLAGS =			\
 	--std=gnu11			\
 	-mcmodel=kernel		\
 	-Wno-attributes		\
-	-fno-stack-protector
+	-fno-stack-protector\
+	-D_ALTER_MULTICORE
 
 ifeq ($(ARCH),x86_64)
 	SYS_CFLAGS += 		\
