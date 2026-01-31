@@ -9,7 +9,7 @@
 #include <mu/cpu.h>
 #include <mm/frame.h>
 
-#define ALTER_VERSION "0.0.1"
+#define ALTER_VERSION "0.0.2"
 
 struct cpu_info g_bsp;
 
