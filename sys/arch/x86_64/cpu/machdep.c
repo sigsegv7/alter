@@ -6,6 +6,7 @@
 #include <sys/types.h>
 #include <machine/msr.h>
 #include <mu/cpu.h>
+#include <mm/pool.h>
 
 void
 mu_cpu_conf(struct cpu_info *ci)
@@ -15,6 +16,7 @@ mu_cpu_conf(struct cpu_info *ci)
     }
 
     md_wrmsr(IA32_GS_BASE, (uintptr_t)ci);
+    mm_pool_init(ci);
 }
 
 struct cpu_info *

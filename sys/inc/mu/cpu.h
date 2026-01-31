@@ -7,14 +7,20 @@
 #define _MU_CPU_H_ 1
 
 #include <sys/types.h>
+#include <os/spinlock.h>
+#include <mm/tlsf.h>
 
 /*
  * Represents a logical processor
  *
  * @id: Logical processor ID (assigned by us)
+ * @tlsf_ctx:  Per processor TLSF context
+ * @tlsf_lock: Protects the TLSF context
  */
 struct cpu_info {
     uint32_t id;
+    tlsf_t tlsf_ctx;
+    struct spinlock tlsf_lock;
 };
 
 extern struct cpu_info g_bsp;
