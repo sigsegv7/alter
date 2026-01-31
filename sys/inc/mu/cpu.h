@@ -9,6 +9,31 @@
 #include <sys/types.h>
 
 /*
+ * Represents a logical processor
+ *
+ * @id: Logical processor ID (assigned by us)
+ */
+struct cpu_info {
+    uint32_t id;
+};
+
+extern struct cpu_info g_bsp;
+
+/*
+ * Configure a processor descriptor
+ *
+ * @ci: Processor descriptor to initialize
+ */
+void mu_cpu_conf(struct cpu_info *ci);
+
+/*
+ * Get a reference to the current processor descriptor
+ *
+ * Returns NULL on failure
+ */
+struct cpu_info *mu_cpu_self(void);
+
+/*
  * Set an IRQ mask state
  *
  * @mask: If true, IRQs are masked and disabled

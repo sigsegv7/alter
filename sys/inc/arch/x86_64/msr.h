@@ -7,6 +7,7 @@
 #define _MACHINE_MSR_H_ 1
 
 #include <sys/cdefs.h>
+#include <os/syslog.h>
 
 #define IA32_APIC_BASE      0x0000001B
 #define IA32_GS_BASE        0xC0000101

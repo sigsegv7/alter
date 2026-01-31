@@ -6,9 +6,12 @@
 #include <os/syslog.h>
 #include <os/btl.h>
 #include <mu/uart.h>
+#include <mu/cpu.h>
 #include <mm/frame.h>
 
 #define ALTER_VERSION "0.0.1"
+
+struct cpu_info g_bsp;
 
 int
 kmain(void)
@@ -24,5 +27,9 @@ kmain(void)
 
     /* Initialize the frame manager */
     mm_frame_init();
+
+    /* Initialize bootstrap processor */
+    mu_cpu_conf(&g_bsp);
+
     for (;;);
 }
